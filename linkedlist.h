@@ -259,7 +259,7 @@ private:
 		}
 
 		node(double _data)
-			:data(_data)
+			:data(_data), next(nullptr), prev(nullptr)
 		{
 
 		}
@@ -336,8 +336,8 @@ public:
 		{
 			tail = p;
 			head = p;
-			p->next = nullptr;
-			p->prev = nullptr;
+			head->next = nullptr;
+			tail->prev = nullptr;
 		}
 		else
 		{
@@ -354,8 +354,8 @@ public:
 		{
 			head = p;
 			tail = p;
-			p->next = nullptr;
-			p->prev = nullptr;
+			head->next = nullptr;
+			tail->prev = nullptr;
 		}
 		else
 		{
@@ -387,7 +387,7 @@ public:
 	//splits the contents of the current object in two halves. Each half goes to the left and right respectively. Runs in O(n)
 	void split(linkedList& left, linkedList& right)
 	{
-		while (head->next != tail)
+		while (tail->next != head && head != nullptr && tail != nullptr)
 		{
 			//when the list is odd
 			if (head == tail)
@@ -447,13 +447,13 @@ public:
 		}
 
 		//if the left is empty
-		if (left.head != nullptr)
+		if (left.head == nullptr && right.head != nullptr)
 		{
 			//get the remaining items from the right
 			tail->next = right.head;
 			right.head->prev = tail;
 		}
-		else if (right.head != nullptr)
+		else if (right.head == nullptr && left.head != nullptr)//right is empty
 		{
 			//get the remaining items from the left
 			tail->next = left.head;
