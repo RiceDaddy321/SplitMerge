@@ -387,7 +387,7 @@ public:
 		{
 			for (node* iptr = head; iptr != nullptr; iptr = iptr->next)
 			{
-				cout << iptr->data << "\t";
+				cout << iptr->data << " ";
 			}
 			cout << endl << endl;
 		}
@@ -494,21 +494,12 @@ public:
 		fstream load;
 		load.open(file, fstream::in);
 		string in;
-		for (node* iptr = tail; load >> in; iptr = iptr->next)
+		while(load >> in)
 		{
-			//check if the list is empty
-			if (tail == nullptr)
-			{
-				//create a new node 
-				iptr = new node(in);
-			}
-			else
-			{
-				//make a new node
-				node* babynode = new node(in, nullptr, iptr);
-				iptr->next = babynode;
-			}
-
+			//make a new node
+			node* babynode = new node(in);
+			push_back(babynode);
+		
 			//ensure to resest in to being empty
 			in = "";		
 
@@ -522,50 +513,3 @@ public:
 	//In this example, it should write all the words from Moby Dick to the provided output file in sorted order.
 	void writeToFile(string file);
 };
-
-
-
-//adds the data to the back of the list
-//template <>
-//class linkedList <string>
-//{
-//private:
-//	class node
-//	{
-//		node* next;
-//		node* prev;
-//		string data;
-//	};
-//
-//	node* head;
-//	node* tail;
-//public:
-//	//sets head and tail to nullptr
-//	linkedList();
-//
-//	//adds the data to the back of the list
-//	void push_back(int _data);
-//
-//	//A simple print method
-//	void print();
-//
-//	//splits the contents of the current object in two halves. Each half goes to the left and right respectively. Runs in O(n)
-//	void split(linkedList& left, linkedList& right);
-//
-//	//Uses simple selection sort
-//	void sort();
-//
-//	//Implement a method that takes 2 sorted lists and merges them
-//	//into your (initially empty) list to create one sorted list.
-//	//Must run in O(n) time, where n is the total number of items in the two given lists.
-//	void merge();
-//
-//	//loadFromFile should open the file of the specified name and
-//	//enter each item (words in the novel "Moby Dick" in this case)
-//	//in the linked list.
-//	void loadFromFile(string file);
-//
-//	//writeToFile should write each item in the linked list to the provided output file.
-//	//In this example, it should write all the words from Moby Dick to the provided output file in sorted order.
-//	void writeToFile(string file);
-//};
