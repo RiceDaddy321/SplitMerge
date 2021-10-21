@@ -13,6 +13,7 @@ int main()
 	A.push_back(510);
 	A.push_back(720);
 	A.push_back(230);
+
 	A.push_back(290);
 	A.push_back(240);
 	A.push_back(320);

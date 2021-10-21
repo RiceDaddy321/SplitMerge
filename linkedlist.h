@@ -336,7 +336,7 @@ public:
 		{
 			tail = p;
 			head = p;
-			head->next = nullptr;
+			
 			tail->prev = nullptr;
 		}
 		else
@@ -344,7 +344,7 @@ public:
 			tail->next = p;
 			p->prev = tail;
 			tail = p;
-			tail->next = nullptr;
+			
 		}
 	}
 
@@ -355,14 +355,14 @@ public:
 			head = p;
 			tail = p;
 			head->next = nullptr;
-			tail->prev = nullptr;
+			
 		}
 		else
 		{
 			head->prev = p;
 			p->next = head;
 			head = p;
-			head->prev = nullptr;
+			
 		}
 	}
 
@@ -379,8 +379,9 @@ public:
 		{
 			for (node* iptr = head; iptr != nullptr; iptr = iptr->next)
 			{
-				cout << iptr->data << endl << endl;
+				cout << iptr->data << "\t";
 			}
+			cout << endl << endl;
 		}
 	}
 
@@ -404,8 +405,17 @@ public:
 			tail = tail->prev;
 		}
 
+		//clear the list
 		head = nullptr;
 		tail = nullptr;
+
+		//set both ends of right and left to nullptr
+		right.head->prev = nullptr;
+		right.tail->next = nullptr;
+
+		left.head->prev = nullptr;
+		left.tail->next = nullptr;
+
 	}
 
 	//Uses simple selection sort
