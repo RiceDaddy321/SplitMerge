@@ -511,5 +511,31 @@ public:
 
 	//writeToFile should write each item in the linked list to the provided output file.
 	//In this example, it should write all the words from Moby Dick to the provided output file in sorted order.
-	void writeToFile(string file);
+	void writeToFile(string file)
+	{
+		fstream write;
+		write.open(file, fstream::out);
+
+		//ensure that the thing is not empty
+		if (isListEmpty())
+		{
+			write << "List is empty" << endl;
+		}
+		else
+		{
+			long i = 0;
+			//start at head, copy data to file, then go to next node
+			for (node* iptr = head; iptr != nullptr; iptr = iptr->next)
+			{
+				if (++i % 50 == 0)
+					write << iptr->data << " " << endl;
+				else
+					write << iptr->data << " ";
+
+			}
+		}
+
+		//don't forget to close the file
+		write.close();
+	}
 };
