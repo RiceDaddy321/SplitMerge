@@ -55,19 +55,19 @@ int main()
 
 
 	//Add a methods to load your list from a file, and write your list to a file
-	//linkedList<string> B;
+	linkedList<string> B;
 
-	////loadFromFile should open the file of the specified name and
-	////enter each item (words in the novel "Moby Dick" in this case)
-	////in the linked list.
-	//B.loadFromFile("whale.txt");
+	//loadFromFile should open the file of the specified name and
+	//enter each item (words in the novel "Moby Dick" in this case)
+	//in the linked list.
+	B.loadFromFile("whale.txt");
 
-	////This line will sort all the words in the novel Moby Dick.
-	//B.sort();
+	//This line will sort all the words in the novel Moby Dick.
+	B.sort();
 
-	////writeToFile should write each item in the linked list to the provided output file.
-	////In this example, it should write all the words from Moby Dick to the provided output file in sorted order.
-	//B.writeToFile("sortedWhale.txt");
+	//writeToFile should write each item in the linked list to the provided output file.
+	//In this example, it should write all the words from Moby Dick to the provided output file in sorted order.
+	B.writeToFile("sortedWhale.txt");
 
 	return 0;
 }

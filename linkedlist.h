@@ -240,14 +240,55 @@ public:
 		right.tail = nullptr;
 	}
 
-	//loadFromFile should open the file of the specified name and
-	//enter each item (words in the novel "Moby Dick" in this case)
-	//in the linked list.
-	void loadFromFile(string file);
+	void loadFromFile(string file)
+	{
+		fstream load;
+		load.open(file, fstream::in);
+		string in;
+		while (load >> in)
+		{
+			//make a new node
+			node* babynode = new node(in);
+			push_back(babynode);
+
+			//ensure to resest in to being empty
+			in = "";
+
+		}
+
+		//done with load
+		load.close();
+	}
 
 	//writeToFile should write each item in the linked list to the provided output file.
 	//In this example, it should write all the words from Moby Dick to the provided output file in sorted order.
-	void writeToFile(string file);
+	void writeToFile(string file)
+	{
+		fstream write;
+		write.open(file, fstream::out);
+
+		//ensure that the thing is not empty
+		if (isListEmpty())
+		{
+			write << "List is empty" << endl;
+		}
+		else
+		{
+			long i = 0;
+			//start at head, copy data to file, then go to next node
+			for (node* iptr = head; iptr != nullptr; iptr = iptr->next)
+			{
+				if (++i % 50 == 0)
+					write << iptr->data << " " << endl;
+				else
+					write << iptr->data << " ";
+
+			}
+		}
+
+		//don't forget to close the file
+		write.close();
+	}
 };
 
 template<>
@@ -296,12 +337,45 @@ private:
 		node* smallest = p;
 		for (node* iptr = p; iptr != nullptr; iptr = iptr->next)
 		{
-			if (iptr->data < smallest->data)
+			if (iptr->data.compare(smallest->data) < 0)
 				smallest = iptr;
 		}
 
 		return smallest;
 	}
+
+	node* partition(node* left, node* right)
+	{
+		node* pivot = right;
+		node* i = left->prev;
+		for (struct node* ptr = left; ptr != right; ptr = ptr->next)
+		{
+			if (ptr->data <= pivot->data)
+			{
+				i = (i == nullptr ? left : i->next);
+				string temp= i->data;
+				i->data = ptr->data;
+				ptr->data = temp;
+			}
+		}
+
+		i = (i == nullptr ? left : i->next);
+		string temp = i->data;
+		i->data = pivot->data;
+		pivot->data = temp;
+		return i;
+	}
+
+	void QuickSort(node* left, node* right)
+	{
+		if (right != nullptr && left != right && left != right->next)
+		{
+			node* p = partition(left, right);
+			QuickSort(left, p->prev);
+			QuickSort(p->next, right);
+		}
+	}
+
 public:
 	//sets head and tail to nullptr
 	linkedList()
@@ -426,17 +500,10 @@ public:
 
 	}
 
-	//Uses simple selection sort
+	//Uses mergesort
 	void sort()
 	{
-		for (node* iptr = head; iptr != nullptr; iptr = iptr->next)
-		{
-			//findsmallest
-			node* small = findSmallest(iptr);
-
-			//swap smallest to node iptr
-			swap(iptr->data, small->data);
-		}
+		QuickSort(head, tail);
 	}
 
 	//Implement a method that takes 2 sorted lists and merges them
