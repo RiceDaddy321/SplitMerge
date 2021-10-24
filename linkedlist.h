@@ -302,6 +302,39 @@ private:
 
 		return smallest;
 	}
+
+	node* partition(node* left, node* right)
+	{
+		node* pivot = right;
+		node* i = left->prev;
+		for (struct node* ptr = left; ptr != right; ptr = ptr->next)
+		{
+			if (ptr->data <= pivot->data)
+			{
+				i = (i == nullptr ? left : i->next);
+				string temp= i->data;
+				i->data = ptr->data;
+				ptr->data = temp;
+			}
+		}
+
+		i = (i == nullptr ? left : i->next);
+		string temp = i->data;
+		i->data = pivot->data;
+		pivot->data = temp;
+		return i;
+	}
+
+	void QuickSort(node* left, node* right)
+	{
+		if (right != nullptr && left != right && left != right->next)
+		{
+			node* p = partition(left, right);
+			QuickSort(left, p->prev);
+			QuickSort(p->next, right);
+		}
+	}
+
 public:
 	//sets head and tail to nullptr
 	linkedList()
