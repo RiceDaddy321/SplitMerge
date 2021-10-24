@@ -142,6 +142,7 @@
     <ClCompile Include="splitMerge.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="sortedWhale.txt" />
     <Text Include="whale.txt" />
   </ItemGroup>
   <ItemGroup>
