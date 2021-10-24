@@ -80,13 +80,12 @@ int main()
 	cout << "sorted" << endl;
 	/* Getting number of milliseconds as a double. */
 	duration<double, std::milli> ms_double = t2 - t1;
-	
 	cout << ms_double.count() << "ms" << endl;
 
 	//writeToFile should write each item in the linked list to the provided output file.
 	//In this example, it should write all the words from Moby Dick to the provided output file in sorted order.
 	B.writeToFile("sortedWhale.txt");
 	cout << "wrote" << endl;
-
+	
 	return 0;
 }

@@ -350,7 +350,6 @@ public:
 	linkedList()
 		:head(nullptr), tail(nullptr)
 	{
-
 	}
 
 	void push_back(string _data)
