@@ -1,17 +1,8 @@
 #include "linkedlist.h"
-
-#include <chrono>
-#include <thread>
 //Implement a (singly or doubly) linked list that supports
 //the following methods.
 int main()
 {
-	using std::chrono::high_resolution_clock;
-	using std::chrono::duration_cast;
-	using std::chrono::duration;
-	using std::chrono::milliseconds;
-
-	
 	linkedList<double> A;
 
 	//Implement a push_back method that adds a given item to the back of the list.
@@ -70,22 +61,13 @@ int main()
 	//enter each item (words in the novel "Moby Dick" in this case)
 	//in the linked list.
 	B.loadFromFile("whale.txt");
-	cout << "loaded" << endl;
 
-	using namespace std::chrono_literals;
-	auto t1 = high_resolution_clock::now();
 	//This line will sort all the words in the novel Moby Dick.
 	B.sort();
-	auto t2 = high_resolution_clock::now();
-	cout << "sorted" << endl;
-	/* Getting number of milliseconds as a double. */
-	duration<double, std::milli> ms_double = t2 - t1;
-	cout << ms_double.count() << "ms" << endl;
-
+	
 	//writeToFile should write each item in the linked list to the provided output file.
 	//In this example, it should write all the words from Moby Dick to the provided output file in sorted order.
 	B.writeToFile("sortedWhale.txt");
-	cout << "wrote" << endl;
 	
 	return 0;
 }

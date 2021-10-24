@@ -49,7 +49,7 @@ private:
 	{
 		if (list.head != nullptr
 			&& list.tail != nullptr
-			&& list.tail != list.head)//when we have one item
+			&& list.tail != list.head)//when we have more than one item 
 		{
 			//split the array into smaller pieces
 			linkedList<T> left;
@@ -57,14 +57,17 @@ private:
 
 			list.split(left, right);
 
+			//do the left
 			list.mergeSort(left);
-			//start piecing them back together
+			//do the right now
 			list.mergeSort(right);
+
+			//start piecing them back together
 			//call merge function
 			list.merge(left, right);
 		}
 
-		return;
+		return;//if a single item then return
 	}
 public:
 	//sets head and tail to nullptr
@@ -350,6 +353,7 @@ public:
 	linkedList()
 		:head(nullptr), tail(nullptr)
 	{
+
 	}
 
 	void push_back(string _data)
