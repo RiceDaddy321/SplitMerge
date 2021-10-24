@@ -29,7 +29,6 @@ int main()
 	A.push_back(820);
 	A.push_back(530);
 	A.push_back(210);
-	A.push_back(456);
 
 	//Implement a simple print method to test your list.
 	A.print(); //450 320 750..... 530 210

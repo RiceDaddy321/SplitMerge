@@ -45,16 +45,26 @@ private:
 			return false;
 	}
 
-	node* findSmallest(node* p)
+	void mergeSort(linkedList& list)//doesn't need an array parameter because it has this
 	{
-		node* smallest = p;
-		for (node* iptr = p; iptr != nullptr; iptr = iptr->next)
+		if (list.head != nullptr
+			&& list.tail != nullptr
+			&& list.tail != list.head)//when we have one item
 		{
-			if (iptr->data < smallest->data)
-				smallest = iptr;
+			//split the array into smaller pieces
+			linkedList<T> left;
+			linkedList<T> right;
+
+			list.split(left, right);
+
+			list.mergeSort(left);
+			//start piecing them back together
+			list.mergeSort(right);
+			//call merge function
+			list.merge(left, right);
 		}
 
-		return smallest;
+		return;
 	}
 public:
 	//sets head and tail to nullptr
@@ -155,10 +165,10 @@ public:
 			return;
 		else
 		{
-			linkedList iList;
+			linkedList<T> iList;
 			iList.head = head;
 			iList.tail = tail;
-			while (iList.tail->next != iList.head //EVEN CASE
+			while (iList.head->next != iList.tail //EVEN CASE
 				&& iList.head != iList.tail) //ODD CASE
 			{
 				//when list is even
@@ -203,14 +213,14 @@ public:
 	//Uses simple selection sort
 	void sort()
 	{
-		for (node* iptr = head; iptr != nullptr; iptr = iptr->next)
-		{
-			//findsmallest
-			node* small = findSmallest(iptr);
+		linkedList<T> temp;
+		temp.head = head;
+		temp.tail = tail;
+		mergeSort(temp);
 
-			//swap smallest to node iptr
-			swap(iptr->data, small->data);
-		}
+		//now i need to swap temp with this
+		this->head = temp.head;
+		this->tail = temp.tail;
 	}
 
 	//Implement a method that takes 2 sorted lists and merges them
@@ -311,35 +321,23 @@ private:
 			return false;
 	}
 
-	node* findSmallest(node* p)
-	{
-		node* smallest = p;
-		for (node* iptr = p; iptr != nullptr; iptr = iptr->next)
-		{
-			if (iptr->data < smallest->data)
-				smallest = iptr;
-		}
-
-		return smallest;
-	}
-	
 	void mergeSort(linkedList& list)//doesn't need an array parameter because it has this
 	{
-		if (list.tail->next != list.head 
-			&& list.head != nullptr 
-			&& list.tail != nullptr)//check that first is lower than last
+		if (list.head != nullptr
+			&& list.tail != nullptr
+			&& list.tail != list.head)//when we have one item
 		{
 			//split the array into smaller pieces
-			linkedList left;
-			linkedList right;
+			linkedList<string> left;
+			linkedList<string> right;
 
 			list.split(left, right);
 
-			mergeSort(left);
+			list.mergeSort(left);
 			//start piecing them back together
-			mergeSort(right);
+			list.mergeSort(right);
 			//call merge function
-			merge(left, right);
+			list.merge(left, right);
 		}
 
 		return;
@@ -446,16 +444,16 @@ public:
 			return;
 		else
 		{
-			linkedList iList;
+			linkedList<string> iList;
 			iList.head = head;
 			iList.tail = tail;
-			while (iList.tail->next != iList.head //EVEN CASE
+			while (iList.head->next != iList.tail //EVEN CASE
 				&& iList.head != iList.tail) //ODD CASE
 			{
 				//when list is even
 				/*right.push_front(tail);
 				left.push_back(head);*/
-			
+
 				iList.head = iList.head->next;
 				iList.tail = iList.tail->prev;
 			}
@@ -498,6 +496,10 @@ public:
 		temp.head = head;
 		temp.tail = tail;
 		mergeSort(temp);
+
+		//now i need to swap temp with this
+		this->head = temp.head;
+		this->tail = temp.tail;
 	}
 
 	//Implement a method that takes 2 sorted lists and merges them
