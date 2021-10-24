@@ -21,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="whale.txt" />
+    <Text Include="sortedWhale.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="linkedlist.h">
