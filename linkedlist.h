@@ -150,34 +150,54 @@ public:
 	//splits the contents of the current object in two halves. Each half goes to the left and right respectively. Runs in O(n)
 	void split(linkedList& left, linkedList& right)
 	{
-		while (tail->next != head && head != nullptr && tail != nullptr)
+		//check if nullptr
+		if (tail == nullptr || head == nullptr)
+			return;
+		else
 		{
+			linkedList iList;
+			iList.head = head;
+			iList.tail = tail;
+			while (iList.tail->next != iList.head //EVEN CASE
+				&& iList.head != iList.tail) //ODD CASE
+			{
+				//when list is even
+				/*right.push_front(tail);
+				left.push_back(head);*/
+
+				iList.head = iList.head->next;
+				iList.tail = iList.tail->prev;
+			}
+
 			//when the list is odd
-			if (head == tail)
+			if (iList.head == iList.tail)
 			{
-				left.push_back(head);
+				left.head = head;
+				left.tail = iList.head;
+
+				right.head = iList.head->next;
+				right.tail = tail;
 			}
-			else
+			else //when even
 			{
-				right.push_front(tail);
-				left.push_back(head);
+				left.head = head;
+				left.tail = iList.head;
+
+				right.head = iList.tail;
+				right.tail = tail;
 			}
 
-			head = head->next;
-			tail = tail->prev;
+			//clear the list
+			head = nullptr;
+			tail = nullptr;
+
+			//set both ends of right and left to nullptr
+			right.head->prev = nullptr;
+			right.tail->next = nullptr;
+
+			left.head->prev = nullptr;
+			left.tail->next = nullptr;
 		}
-
-		//clear the list
-		head = nullptr;
-		tail = nullptr;
-
-		//set both ends of right and left to nullptr
-		right.head->prev = nullptr;
-		right.tail->next = nullptr;
-
-		left.head->prev = nullptr;
-		left.tail->next = nullptr;
-
 	}
 
 	//Uses simple selection sort
@@ -302,38 +322,30 @@ private:
 
 		return smallest;
 	}
-
-	node* partition(node* left, node* right)
+	
+	void mergeSort(linkedList& list)//doesn't need an array parameter because it has this
 	{
-		node* pivot = right;
-		node* i = left->prev;
-		for (struct node* ptr = left; ptr != right; ptr = ptr->next)
+		if (list.tail->next != list.head 
+			&& list.head != nullptr 
+			&& list.tail != nullptr)//check that first is lower than last
 		{
-			if (ptr->data <= pivot->data)
-			{
-				i = (i == nullptr ? left : i->next);
-				string temp= i->data;
-				i->data = ptr->data;
-				ptr->data = temp;
-			}
+			//split the array into smaller pieces
+			linkedList left;
+			linkedList right;
+
+			list.split(left, right);
+
+			mergeSort(left);
+			//start piecing them back together
+			mergeSort(right);
+			//call merge function
+			merge(left, right);
 		}
 
-		i = (i == nullptr ? left : i->next);
-		string temp = i->data;
-		i->data = pivot->data;
-		pivot->data = temp;
-		return i;
+		return;
 	}
 
-	void QuickSort(node* left, node* right)
-	{
-		if (right != nullptr && left != right && left != right->next)
-		{
-			node* p = partition(left, right);
-			QuickSort(left, p->prev);
-			QuickSort(p->next, right);
-		}
-	}
+	
 
 public:
 	//sets head and tail to nullptr
@@ -429,47 +441,63 @@ public:
 	//splits the contents of the current object in two halves. Each half goes to the left and right respectively. Runs in O(n)
 	void split(linkedList& left, linkedList& right)
 	{
-		while (tail->next != head && head != nullptr && tail != nullptr)
+		//check if nullptr
+		if (tail == nullptr || head == nullptr)
+			return;
+		else
 		{
+			linkedList iList;
+			iList.head = head;
+			iList.tail = tail;
+			while (iList.tail->next != iList.head //EVEN CASE
+				&& iList.head != iList.tail) //ODD CASE
+			{
+				//when list is even
+				/*right.push_front(tail);
+				left.push_back(head);*/
+			
+				iList.head = iList.head->next;
+				iList.tail = iList.tail->prev;
+			}
+
 			//when the list is odd
-			if (head == tail)
+			if (iList.head == iList.tail)
 			{
-				left.push_back(head);
+				left.head = head;
+				left.tail = iList.head;
+
+				right.head = iList.head->next;
+				right.tail = tail;
 			}
-			else
+			else //when even
 			{
-				right.push_front(tail);
-				left.push_back(head);
+				left.head = head;
+				left.tail = iList.head;
+
+				right.head = iList.tail;
+				right.tail = tail;
 			}
 
-			head = head->next;
-			tail = tail->prev;
+			//clear the list
+			head = nullptr;
+			tail = nullptr;
+
+			//set both ends of right and left to nullptr
+			right.head->prev = nullptr;
+			right.tail->next = nullptr;
+
+			left.head->prev = nullptr;
+			left.tail->next = nullptr;
 		}
-
-		//clear the list
-		head = nullptr;
-		tail = nullptr;
-
-		//set both ends of right and left to nullptr
-		right.head->prev = nullptr;
-		right.tail->next = nullptr;
-
-		left.head->prev = nullptr;
-		left.tail->next = nullptr;
-
 	}
 
 	//Uses simple selection sort
 	void sort()
 	{
-		for (node* iptr = head; iptr != nullptr; iptr = iptr->next)
-		{
-			//findsmallest
-			node* small = findSmallest(iptr);
-
-			//swap smallest to node iptr
-			swap(iptr->data, small->data);
-		}
+		linkedList<string> temp;
+		temp.head = head;
+		temp.tail = tail;
+		mergeSort(temp);
 	}
 
 	//Implement a method that takes 2 sorted lists and merges them
